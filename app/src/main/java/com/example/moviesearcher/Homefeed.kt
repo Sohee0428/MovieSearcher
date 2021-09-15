@@ -1,3 +1,3 @@
 package com.example.moviesearcher
 
-data class Homefeed (val item : List<Item>)
+data class HomeFeed (val item : List<Item>)

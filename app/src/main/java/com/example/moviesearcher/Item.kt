@@ -1,6 +1,6 @@
 package com.example.moviesearcher
 
-data class Item (
+data class Item(
     val title: String,
     val link: String,
     val image: String,
@@ -8,4 +8,5 @@ data class Item (
     val pubData: String,
     val director: String,
     val actor: String,
-    val usrRating: String)
+    val usrRating: String
+)
