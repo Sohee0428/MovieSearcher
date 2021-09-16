@@ -8,16 +8,14 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.GsonBuilder
+import com.example.moviesearcher.data.ResultGetSearchMovie
 import okhttp3.*
-import java.io.IOException
-import java.net.URL
-import java.net.URLEncoder
+import retrofit2.Response
+import com.example.moviesearcher.data.Item as DataItem
 
 class MainActivity : AppCompatActivity() {
 
-    private val clientId = "client id"
-    private val clientSecret = "client secret"
+    var movieList = arrayListOf<DataItem>()
 
     private val movieTitle: EditText by lazy {
         findViewById(R.id.movieTitle)
@@ -31,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.recyclerView)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,6 +39,9 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            val adapter = RecyclerViewAdapter(this, movieList)
+            recyclerView.adapter = adapter
+
             val layoutManager = LinearLayoutManager(this)
 
 //            리사이클러뷰에 아이템을 배치 후 더이상 보이지 않을 때 재사용성을 결정하는 것
@@ -47,55 +49,25 @@ class MainActivity : AppCompatActivity() {
             recyclerView.layoutManager = layoutManager
             recyclerView.setHasFixedSize(true)
 
-            fetJson(movieTitle.text.toString())
-
-//            자판 내리기
+//            키보드 숨기기
             val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(movieTitle.windowToken, 0)
         }
-    }
 
-    private fun fetJson(vararg p0: String) {
+        val api = NaverAPI.NaverAPI.create()
+        api.getSearchMovies("테스트").enqueue(object : retrofit2.Callback<ResultGetSearchMovie> {
+            override fun onResponse(
+                call: retrofit2.Call<ResultGetSearchMovie>,
+                response: Response<ResultGetSearchMovie>
+            ) {
 
-        val text = URLEncoder.encode(p0[0], "UTF-8")
-        println(text)
-
-        val url =
-            URL("https://openapi.naver.com/v1/search/movie.json?query=${text}&display=10&start=1&genre=")
-
-        val formBody = FormBody.Builder()
-            .add("query", text)
-            .add("display", "10")
-            .add("start", "1")
-            .add("genre", "1")
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .addHeader("X-Naver-Client-Id", clientId)
-            .addHeader("X-Naver-Client-Secret", clientSecret)
-            .method("Get", null)
-            .build()
-
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val body = response?.body()?.string()
-                println("Success to execute request : $body")
-
-                val gson = GsonBuilder().create()
-
-                val homefeed = gson.fromJson(body, HomeFeed::class.java)
-
-                runOnUiThread {
-                    recyclerView.adapter = RecyclerViewAdapter(homefeed)
-                    movieTitle.setText("")
-                }
             }
 
-            override fun onFailure(call: Call, e: IOException) {
-                println("Failed to execute request")
+            override fun onFailure(call: retrofit2.Call<ResultGetSearchMovie>, t: Throwable) {
             }
         })
+
+
     }
+
 }

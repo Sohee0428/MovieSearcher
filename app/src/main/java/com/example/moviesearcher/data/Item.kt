@@ -1,4 +1,4 @@
-package com.example.moviesearcher
+package com.example.moviesearcher.data
 
 data class Item(
     val title: String,

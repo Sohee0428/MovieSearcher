@@ -1,5 +1,6 @@
 package com.example.moviesearcher
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
@@ -10,24 +11,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.moviesearcher.data.Item
 
-class RecyclerViewAdapter(private val homeFeed: HomeFeed) :
+class RecyclerViewAdapter(val context: Context, val movieList: ArrayList<Item>) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
-        return homeFeed.item.count()
+        return movieList.size
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.raw_item, parent, false)
+        val v = LayoutInflater.from(context).inflate(R.layout.raw_item, parent, false)
         return ViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItem(homeFeed.item[position])
+        holder.bindItem(movieList[position], context)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -37,7 +39,7 @@ class RecyclerViewAdapter(private val homeFeed: HomeFeed) :
         private val actor = itemView.findViewById<TextView>(R.id.actor)
         private val director = itemView.findViewById<TextView>(R.id.director)
 
-        fun bindItem(item: Item) {
+        fun bindItem(item: Item, context: Context) {
             Glide.with(itemView).load(item.image)
                 .apply(RequestOptions().override(300, 450))
                 .apply(RequestOptions.centerCropTransform())
