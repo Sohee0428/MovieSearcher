@@ -2,6 +2,7 @@ package com.example.moviesearcher
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         searchBtn.setOnClickListener {
+            Log.d("searchBtn", "검색버튼 누름")
             if (movieTitle.text.isEmpty()) {
                 return@setOnClickListener
             }
@@ -54,8 +56,8 @@ class MainActivity : AppCompatActivity() {
             imm.hideSoftInputFromWindow(movieTitle.windowToken, 0)
         }
 
-        val api = NaverAPI.NaverAPI.create()
-        api.getSearchMovies("테스트").enqueue(object : retrofit2.Callback<ResultGetSearchMovie> {
+        val api = NaverAPI.create()
+        api.getSearchMovies(movieTitle).enqueue(object : retrofit2.Callback<ResultGetSearchMovie> {
             override fun onResponse(
                 call: retrofit2.Call<ResultGetSearchMovie>,
                 response: Response<ResultGetSearchMovie>
@@ -67,6 +69,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        val thread = Thread{
+            var apiExamSearchBlog = ApiExamSearchBlog()
+            apiExamSearchBlog.main()
+        }.start()
 
     }
 

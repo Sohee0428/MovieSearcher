@@ -17,7 +17,8 @@
         android:hint="오늘의 영화"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/searchBtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="textShortMessage"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/searchBtn"
