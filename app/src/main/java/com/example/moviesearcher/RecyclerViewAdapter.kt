@@ -16,6 +16,12 @@ import com.example.moviesearcher.data.Item
 class RecyclerViewAdapter(val context: Context, val movieList: ArrayList<Item>) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
+    fun addMovieList(list: List<Item>) {
+        movieList.clear()
+        movieList.addAll(list)
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return movieList.size
     }
