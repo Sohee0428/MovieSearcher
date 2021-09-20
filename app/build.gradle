@@ -51,6 +51,7 @@ dependencies {
 //    okHttp 설치
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
     implementation("com.squareup.okhttp3:okhttp")
+//     logging 설치
     implementation("com.squareup.okhttp3:logging-interceptor")
 
 //    Gson 설치

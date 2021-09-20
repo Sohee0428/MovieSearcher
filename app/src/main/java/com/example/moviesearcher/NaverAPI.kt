@@ -24,9 +24,11 @@ interface NaverAPI {
         private const val CLIENT_SECRET = "XOB__trP_C"
 
         fun create(): NaverAPI {
+//            데이터를 넘겨받아 어떤 데이터를 받았는지 검색
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
+//            말그대로 정보를 중간에 가져오는 역할
             val headerInterceptor = Interceptor {
                 val request = it.request()
                     .newBuilder()
@@ -44,6 +46,7 @@ interface NaverAPI {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL_NAVER_API)
                 .client(client)
+//                    자동으로 Json을  Gson으로 바꿔주는 역할
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(NaverAPI::class.java)

@@ -6,14 +6,13 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviesearcher.data.Item
 import com.example.moviesearcher.data.ResultGetSearchMovie
 import okhttp3.*
 import retrofit2.Response
-import com.example.moviesearcher.data.Item
 
 class MainActivity : AppCompatActivity() {
 
@@ -66,18 +65,22 @@ class MainActivity : AppCompatActivity() {
 //            }
 
             // TODO 검색 해서 공부하기(api 비동기 호출)
-            api.getSearchMovies(movieTitle.text.toString()).enqueue(object : retrofit2.Callback<ResultGetSearchMovie> {
-                override fun onResponse(
-                    call: retrofit2.Call<ResultGetSearchMovie>,
-                    response: Response<ResultGetSearchMovie>
-                ) {
-                    Log.d("jsh",response.body().toString())
-                    adapter.addMovieList(response.body()!!.items)
-                }
+            api.getSearchMovies(movieTitle.text.toString())
+                .enqueue(object : retrofit2.Callback<ResultGetSearchMovie> {
+                    override fun onResponse(
+                        call: retrofit2.Call<ResultGetSearchMovie>,
+                        response: Response<ResultGetSearchMovie>
+                    ) {
+                        Log.d("jsh", response.body().toString())
+                        adapter.addMovieList(response.body()!!.items)
+                    }
 
-                override fun onFailure(call: retrofit2.Call<ResultGetSearchMovie>, t: Throwable) {
-                }
-            })
+                    override fun onFailure(
+                        call: retrofit2.Call<ResultGetSearchMovie>,
+                        t: Throwable
+                    ) {
+                    }
+                })
         }
 
     }
