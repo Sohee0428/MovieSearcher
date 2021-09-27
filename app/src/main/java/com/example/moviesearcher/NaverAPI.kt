@@ -13,7 +13,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NaverAPI {
-    @GET("v1/search/movie.json")
+    @GET("v1/search/movie.json?")
     fun getSearchMovies(
         @Query("query") query: String
     ): Call<ResultGetSearchMovie>

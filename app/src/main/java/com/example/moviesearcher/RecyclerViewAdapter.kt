@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.moviesearcher.data.Item
+import com.example.moviesearcher.databinding.ActivityMainBinding
+import com.example.moviesearcher.databinding.RawItemBinding
 
 class RecyclerViewAdapter(val context: Context, val movieList: ArrayList<Item>) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
@@ -30,30 +32,23 @@ class RecyclerViewAdapter(val context: Context, val movieList: ArrayList<Item>) 
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val v = LayoutInflater.from(context).inflate(R.layout.raw_item, parent, false)
-        return ViewHolder(v)
+
+        val rawItemBinding = RawItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(rawItemBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItem(movieList[position], context)
+        holder.bindItem(movieList[position])
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(private val binding: RawItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private val imageView = itemView.findViewById<ImageView>(R.id.imageView)
-        private val title = itemView.findViewById<TextView>(R.id.title)
-        private val actor = itemView.findViewById<TextView>(R.id.actor)
-        private val director = itemView.findViewById<TextView>(R.id.director)
-
-        fun bindItem(item: Item, context: Context) {
+        fun bindItem(item: Item) {
             Glide.with(itemView).load(item.image)
                 .apply(RequestOptions().override(300, 450))
                 .apply(RequestOptions.centerCropTransform())
-                .into(imageView)
+                .into(binding.imageView)
 
-            title.text = item.title
-            actor.text = "출연 ${item.actor}"
-            director.text = "감독 ${item.director}"
 
             itemView.setOnClickListener {
                 val webPage = Uri.parse(item.link)
