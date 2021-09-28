@@ -24,7 +24,6 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:hint="오늘의 영화"
-            android:visibility="@{activity.isVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/searchBtn"
             app:layout_constraintTop_toTopOf="parent"

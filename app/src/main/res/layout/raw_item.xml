@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -36,7 +37,8 @@
                 android:text="@{item.title}"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="제목" />
 
             <TextView
                 android:id="@+id/actor"
@@ -44,19 +46,18 @@
                 android:layout_height="wrap_content"
                 android:text="@{item.actor}"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                tools:text="배우" />
 
             <TextView
                 android:id="@+id/director"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="감독"
+                android:text="@{item.director}"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
-
+                android:textSize="16dp"
+                tools:text="감독" />
 
         </LinearLayout>
-
-
     </LinearLayout>
 </layout>

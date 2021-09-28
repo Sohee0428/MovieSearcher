@@ -1,7 +1,5 @@
 package com.example.moviesearcher
 
-import android.util.Log
-import android.widget.EditText
 import com.example.moviesearcher.data.ResultGetSearchMovie
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
